@@ -19,14 +19,10 @@ public class CameraController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		//transform.RotateAround (center.position, Input.GetAxis ("Mouse X") * speed * Time.deltaTime);
-
-
+		// Move Camera on mouse clicked
 		if (Input.GetMouseButton (1)) {
 			mouseX += Input.GetAxis ("Mouse X");
 			mouseY -= Input.GetAxis ("Mouse Y");
-
-			print ("Data x: "+ mouseX + ", y: "+ mouseY);
 
 			transform.RotateAround (Vector3.zero, center.transform.TransformDirection(Vector3.up), mouseX * speed * Time.deltaTime);
 			transform.RotateAround (Vector3.zero, center.transform.TransformDirection(Vector3.right), mouseY * speed * Time.deltaTime);
@@ -37,6 +33,16 @@ public class CameraController : MonoBehaviour {
 		if (Input.GetMouseButtonUp (1)) {
 			mouseX = 0;
 			mouseY = 0;
+		}
+
+		// Show Controls
+		Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+		RaycastHit hit;
+
+		if (Physics.Raycast (ray, out hit, 200, 1 << LayerMask.NameToLayer ("Cubes"))) {
+			Debug.DrawLine (ray.origin, hit.point, Color.green);
+
+			hit.transform.GetComponent<CubeController> ().showControllHitFace(hit);
 		}
 	}
 }
