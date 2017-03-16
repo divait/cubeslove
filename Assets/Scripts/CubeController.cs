@@ -2,18 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CubeMove : MonoBehaviour {
+public class CubeController : MonoBehaviour {
 	enum Direction {Up, Down, Left, Right, Front, Back};
 
 	public float speed = 0.2f;
+	public Vector3 initialPostion;
+
+	private GameController gameController;
 	private float startTime;
 	private float journeyLength;
 	private Vector3 destination;
-
 	private bool isMoving;
 
 	void Start() {
 		isMoving = false;
+		gameController = transform.parent.GetComponent<GameController> ();
 	}
 
 	void Update() {
