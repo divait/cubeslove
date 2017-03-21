@@ -24,8 +24,8 @@ public class CameraController : MonoBehaviour {
 			mouseX += Input.GetAxis ("Mouse X");
 			mouseY -= Input.GetAxis ("Mouse Y");
 
-			transform.RotateAround (Vector3.zero, center.transform.TransformDirection(Vector3.up), mouseX * speed * Time.deltaTime);
-			transform.RotateAround (Vector3.zero, center.transform.TransformDirection(Vector3.right), mouseY * speed * Time.deltaTime);
+			transform.RotateAround (Vector3.zero, center.transform.up, mouseX * speed * Time.deltaTime);
+			transform.RotateAround (Vector3.zero, center.transform.right, mouseY * speed * Time.deltaTime);
 
 			center.transform.rotation = transform.rotation;
 		}

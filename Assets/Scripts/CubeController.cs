@@ -36,7 +36,7 @@ public class CubeController : MonoBehaviour {
 
 
 	public void startMove (Direction dir) {
-		if (!isMoving) {
+		if (!isMoving && gameController.checkNext(dir, transform)) {
 			isMoving = true;
 			startTime = Time.time;
 
