@@ -12,6 +12,8 @@ public class CameraController : MonoBehaviour {
 	private float mouseX;
 	private float mouseY;
 
+	private CubeController lastHit;
+
 	// Use this for initialization
 	void Start () {
 		distanceCenter = transform.position - center.position;
@@ -36,13 +38,19 @@ public class CameraController : MonoBehaviour {
 		}
 
 		// Show Controls
+		if (lastHit != null) {
+			lastHit.dActivateControls ();
+			lastHit = null;
+		}
+
 		Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 		RaycastHit hit;
 
 		if (Physics.Raycast (ray, out hit, 200, 1 << LayerMask.NameToLayer ("Cubes"))) {
 			Debug.DrawLine (ray.origin, hit.point, Color.green);
 
-			hit.transform.GetComponent<CubeController> ().showControllHitFace(hit);
-		}
+			lastHit = hit.transform.GetComponent<CubeController> ();
+			lastHit.showControllHitFace (hit);
+		} 			
 	}
 }

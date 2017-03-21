@@ -67,6 +67,7 @@ public class CubeController : MonoBehaviour {
 
 	public void showControllHitFace(RaycastHit hit)
 	{
+		controls.gameObject.SetActive (true);
 		Vector3 incomingVec = hit.normal - Vector3.up;
 
 		if (incomingVec == new Vector3 (0, -1, -1)) { // Front
@@ -125,5 +126,9 @@ public class CubeController : MonoBehaviour {
 			left.direction = Direction.Left;
 			break;
 		}
+	}
+
+	public void dActivateControls() {
+		controls.gameObject.SetActive (false);
 	}
 }
