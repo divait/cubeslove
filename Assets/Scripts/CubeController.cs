@@ -23,48 +23,62 @@ public class CubeController : MonoBehaviour {
 
 	void Update() {
 
+		// Keep moving the cube
 		if (isMoving) {
 			float distCovered = (Time.time - startTime) * speed;
 			float fracJourney = distCovered / journeyLength;
 
 			transform.position = Vector3.Lerp(transform.position, destination, fracJourney);
 
+			// Check if cube arrive at the destiny
 			if (transform.position == destination)
 				isMoving = false;
 		}
 	}
 
-
+	// Start to move the cube on control clicked
 	public void startMove (Direction dir) {
-		if (!isMoving && gameController.checkNext(dir, transform)) {
-			isMoving = true;
-			startTime = Time.time;
+		
 
+		if (!isMoving && gameController.checkNext(dir, transform)) {
+			Vector3 move = transform.position;
 			switch (dir) {
 			case Direction.Up:
+				move = Vector3.up;
 				destination = transform.position + Vector3.up;
 				break;
 			case Direction.Down:
+				move = Vector3.down;
 				destination = transform.position + Vector3.down;
 				break;
 			case Direction.Left:
+				move = Vector3.left;
 				destination = transform.position + Vector3.left;
 				break;
 			case Direction.Right:
+				move = Vector3.right;
 				destination = transform.position + Vector3.right;
 				break;
 			case Direction.Back:
+				move = Vector3.back;
 				destination = transform.position + Vector3.back;
 				break;
 			case Direction.Front:
+				move = Vector3.forward;
 				destination = transform.position + Vector3.forward;
 				break;
 			}
 
-			journeyLength = Vector3.Distance (transform.position, destination);
+			if (!Physics.Raycast (transform.position, move, .5f, 1 << LayerMask.NameToLayer ("Cubes"))) {
+				isMoving = true;
+				startTime = Time.time;
+
+				journeyLength = Vector3.Distance (transform.position, destination);
+			}
 		}
 	}
 
+	// Show Controls in the hit face
 	public void showControllHitFace(RaycastHit hit)
 	{
 		controls.gameObject.SetActive (true);
@@ -97,6 +111,7 @@ public class CubeController : MonoBehaviour {
 		}
 	}
 
+	// Change the controls to the hot face
 	void ChangeControls(Direction dir) {
 		ButtonMove up = controls.FindChild ("up").GetComponent<ButtonMove> ();
 		ButtonMove down = controls.FindChild ("down").GetComponent<ButtonMove> ();
@@ -128,6 +143,7 @@ public class CubeController : MonoBehaviour {
 		}
 	}
 
+	// Disable (Hide) the controls of the cube
 	public void dActivateControls() {
 		controls.gameObject.SetActive (false);
 	}
