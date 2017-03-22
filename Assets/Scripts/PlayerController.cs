@@ -54,9 +54,12 @@ public class PlayerController : MonoBehaviour {
 
 			transform.position = (transform.position - hit.point).normalized * initDistance + hit.point;
 
+			// Change move side
 			if (hit.transform.CompareTag ("Path"))
 				LookAt (hit.transform.GetComponent<PathCreator>().pathDirecton);
 		}
+
+		print (transform.localPosition + "\n" + transform.position);
 	}
 
 	// Change fordward
@@ -66,17 +69,31 @@ public class PlayerController : MonoBehaviour {
 		switch (direction) {
 		default:
 		case PathCreator.Direction.Front:
-			transform.RotateAround (transform.position, transform.up, 90 - transform.eulerAngles.y);
+			transform.Rotate (Vector3.up * (90- transform.eulerAngles.y));
 			break;
 		case PathCreator.Direction.Back:
-			transform.RotateAround (transform.position, transform.up, 270 - transform.eulerAngles.y);
+			transform.Rotate (Vector3.up * (270- transform.eulerAngles.y));
 			break;
 		case PathCreator.Direction.Right:
-			transform.RotateAround (transform.position, transform.up, 180 - transform.eulerAngles.y);
+			transform.Rotate (Vector3.up * (180- transform.eulerAngles.y));
 			break;
 		case PathCreator.Direction.Left:
-			transform.Rotate (Vector3.up * (0- transform.localEulerAngles.y));
+			transform.Rotate (Vector3.up * (0- transform.eulerAngles.y));
 			break;
 		}
+
+		transform.position = new Vector3 (
+			transform.forward.x!=0?correctPosition (transform.position.x):transform.position.x, 
+			transform.forward.y!=0?correctPosition (transform.position.y):transform.position.y, 
+			transform.forward.z!=0?correctPosition (transform.position.z):transform.position.z
+		);
+		print (transform.forward);
+	}
+
+	private float correctPosition (float pos) {
+		if (pos > -0.12 && pos < 0.12)
+			return 0;
+		else
+			return pos;
 	}
 }
