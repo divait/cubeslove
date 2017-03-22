@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: cec631d3662e2a543bb5253344cc79d8
-timeCreated: 1489676452
+timeCreated: 1490063877
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -52,7 +52,7 @@ TextureImporter:
     21300090: Button_45
     21300092: Button_46
     21300094: move
-    21300096: Button_48
+    21300096: dir
     21300098: Button_49
     21300100: Button_50
     21300102: Button_51
@@ -879,7 +879,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Button_48
+      name: dir
       rect:
         serializedVersion: 2
         x: 684
